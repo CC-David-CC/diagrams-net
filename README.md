@@ -19,3 +19,5 @@ Run `python3 apps/system/diagrams-net/prepare.py` before building. It retrieves
 and checks the pinned upstream commit listed there; generated `node_modules`
 and application bundles are not source files. The upstream license is in
 `LICENSE.drawio.txt`.
+
+Save diagram records the chosen destination and edit revision before asking the embedded editor for XML. Changes made while it prepares the diagram remain marked unsaved; the actual saved path is shown. A separate notice reports mirror-detected changes, conflicts or unavailability of the saved file while keeping the current diagram open. Resolve conflicts in Files or save a copy. Detection depends on mirror synchronization. Local desktop, emulated-phone and 4K and live emulated-phone account tests cover delayed export, newer edits, changes/conflicts, fresh-session reopen and listener cleanup.
