@@ -67,7 +67,7 @@ export function mount(host){
  async function saveAs(){if(busy||choosing||!ready||!valid())return;choosing=true;const before=state.edits,originalPath=state.path,originalVersion=state.version;let target;try{target=await host.ui.prompt('Enter a diagram path in My files:',{title:'Save diagram as',value:path.value,confirmLabel:'Save',signal:host.signal});if(target===null||!valid())return;if(state.edits!==before||state.path!==originalPath||state.version!==originalVersion){tell('The diagram changed while choosing a save name. Save again.');return;}}catch(e){tell('Could not choose a save name: '+e.message);return;}finally{choosing=false;}if(valid())requestExport(target);}
  async function saveLocalExport(data,filename,mime,base64,format){
   if(busy||!valid()){tell('Finish the current file action before exporting.');return;}
-  busy=true;const guard=pendingSave();
+  busy=true;const edit=state.edits,guard=pendingSave();
   try{
    if(typeof data!=='string')throw Error('This export type is not supported by My files yet.');
    const safe=String(filename||'').split(/[\\/]/).pop(),extension=(safe.match(/\.([a-z0-9]{1,12})$/i)||[])[1]||String(format||'').replace(/[^a-z0-9]/gi,'');
@@ -81,7 +81,7 @@ export function mount(host){
    let bytes;if(base64){if(data.length>Math.ceil(128*1024*1024/3)*4+4)throw Error('Exports are limited to 128 MiB.');const binary=atob(data);bytes=new Uint8Array(binary.length);for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);}else bytes=new TextEncoder().encode(data);
    if(bytes.byteLength>128*1024*1024)throw Error('Exports are limited to 128 MiB.');
    let expected=null;try{const existing=await c.files.stat(p);if(existing.status==='conflict')throw Error('Resolve the file conflict in Files first.');if(!await host.ui.confirm('Replace '+p+'?',{title:'Replace export',confirmLabel:'Replace',cancelLabel:'Keep existing file',danger:true,signal:host.signal}))return;expected=existing.version;}catch(e){if(e.message!=='File not found.')throw e;}
-   if(!valid()||!c.valid())return;const result=await c.files.write(p,bytes,expected);if(valid()&&c.valid())tell(result.status==='conflict'?'Export saved locally with a conflict. Resolve it in Files.':'Export saved on this device to '+p+'; syncing with server…');
+   if(!valid()||!c.valid())return;const result=await c.files.write(p,bytes,expected);if(valid()&&c.valid()){const earlier=state.edits!==edit;tell(result.status==='conflict'?'Export saved locally with a conflict. Resolve it in Files.'+(earlier?' The export is from an earlier diagram; newer changes are not included.':''):earlier?'Exported an earlier diagram to '+p+'; newer changes are not included.':'Export saved on this device to '+p+'; syncing with server…');}
   }catch(e){tell('Could not save export: '+e.message);}finally{guard.finish();busy=false;}
  }
  function attachLocalSave(){restoreLocalSaveHook();const prototype=frame.contentWindow?.EditorUi?.prototype,original=prototype?.saveLocalFile;if(typeof original!=='function'){tell('The editor export bridge is unavailable.');return;}function saveLocalFile(data,filename,mime,base64,format){void saveLocalExport(data,filename,mime,base64,format);}prototype.saveLocalFile=saveLocalFile;restoreLocalSaveHook=()=>{if(prototype.saveLocalFile===saveLocalFile)prototype.saveLocalFile=original;};}

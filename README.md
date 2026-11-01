@@ -106,3 +106,12 @@ not. The computer import remains available alongside account-backed Open. Local
 desktop and emulated-phone menu checks observed no external HTTP requests in
 that flow. This is a limited menu check, not a complete provider or network
 security audit; no new provider features were disabled by this change.
+
+Image/PDF export produces a snapshot. If the editor reports changes while the
+result is waiting for its destination or account write, the status says that
+newer changes are not included; the open diagram stays unsaved. Conflicting
+copies are still reported. Local registered-account desktop and emulated-phone
+tests hold an actual SVG write, edit a diagram label, compare the exported
+snapshot, save the newer diagram, sync and reopen it. Changes before the
+upstream editor delivers its export to the host are not necessarily detected,
+and physical touch remains unverified.
