@@ -1,11 +1,14 @@
 # diagrams.net
 
-A local diagrams.net editor embedded per window. Open diagrams from My files;
-use Files to upload a `.drawio` document from the computer. Save diagram writes
-to My files, first on the browser and then through account sync. Expand Save
-location to choose a folder or change the `.drawio` filename. Existing files
-require confirmation and the file service checks versions; conflicts are
-reported without silently replacing another copy.
+A local diagrams.net editor embedded per window. Use **File → Open from My files…**
+to open a diagram. To upload a `.drawio` document from the computer, use Files
+first. **File → Save** writes the current diagram to My files; **File → Save as…**
+chooses another path. Files are saved in the browser and then synchronized with
+the account. Existing files require confirmation and the file service checks
+versions; conflicts are reported without silently replacing another copy. The
+two added menu commands integrate with the pinned upstream editor menu; review
+the integration when updating diagrams.net. If the editor menu cannot be
+connected, recovery controls appear above it for opening and saving work.
 
 Opening checks the XML document before replacing the current diagram and keeps
 unsaved work if reading or validation fails. The editor remains the upstream
@@ -20,4 +23,4 @@ and checks the pinned upstream commit listed there; generated `node_modules`
 and application bundles are not source files. The upstream license is in
 `LICENSE.drawio.txt`.
 
-Save diagram records the chosen destination and edit revision before asking the embedded editor for XML. Changes made while it prepares the diagram remain marked unsaved; the actual saved path is shown. A separate notice reports mirror-detected changes, conflicts or unavailability of the saved file while keeping the current diagram open. Resolve conflicts in Files or save a copy. Detection depends on mirror synchronization. Local desktop, emulated-phone and 4K and live emulated-phone account tests cover delayed export, newer edits, changes/conflicts, fresh-session reopen and listener cleanup.
+Save as records the chosen destination and edit revision before asking the embedded editor for XML. Changes made while it prepares the diagram remain marked unsaved; the actual saved path is shown. A separate notice reports mirror-detected changes, conflicts or unavailability of the saved file while keeping the current diagram open. Resolve conflicts in Files or save a copy. Detection depends on mirror synchronization. Local desktop, emulated-phone and 4K and live emulated-phone account tests cover delayed export, newer edits, changes/conflicts, fresh-session reopen and listener cleanup.
