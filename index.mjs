@@ -72,7 +72,10 @@ export function mount(host){
    if(typeof data!=='string')throw Error('This export type is not supported by My files yet.');
    const safe=String(filename||'').split(/[\\/]/).pop(),extension=(safe.match(/\.([a-z0-9]{1,12})$/i)||[])[1]||String(format||'').replace(/[^a-z0-9]/gi,'');
    const suggested=safe&&!safe.startsWith('.')?safe:'Diagram'+(extension?'.'+extension:'');
-   const target=await host.ui.prompt('Save the export to My files:',{title:'Save export',value:'/'+suggested,confirmLabel:'Save',signal:host.signal});
+   // Keep an export beside the saved diagram by default. The upstream name
+   // remains editable, so students can choose another destination or name.
+   const parent=state.path.slice(0,state.path.lastIndexOf('/'));
+   const target=await host.ui.prompt('Save the export to My files:',{title:'Save export',value:parent+'/'+suggested,confirmLabel:'Save',signal:host.signal});
    if(target===null||!valid())return;
    const c=await mirrorFileContext(),p=c.path(target);if(extension&&!p.toLowerCase().endsWith('.'+extension.toLowerCase()))throw Error('Use a .'+extension+' filename for this export.');
    let bytes;if(base64){if(data.length>Math.ceil(128*1024*1024/3)*4+4)throw Error('Exports are limited to 128 MiB.');const binary=atob(data);bytes=new Uint8Array(binary.length);for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);}else bytes=new TextEncoder().encode(data);

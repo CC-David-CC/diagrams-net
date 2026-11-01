@@ -87,3 +87,10 @@ confirmation cancellation and Retry on desktop and an emulated phone. They
 injected the scratch edit notification; actual drawing interaction in this
 particular recovery path, physical touch and other failure modes remain
 unverified.
+
+Exports now suggest a destination beside the saved drawing, while preserving
+the upstream export filename and letting the user edit both folder and name.
+Local registered-account desktop and emulated-phone checks opened a labeled
+diagram, saved it in a folder, exported SVG beside it, verified the label and
+server sync, and exercised PNG, cancellation and overwrite conflict. Physical
+touch and all export formats remain unverified.
