@@ -18,6 +18,21 @@ all upstream export formats, and third-party integrations have not been broadly
 qualified. The embedded editor uses local assets, with plugin and optional
 network features disabled in its launch configuration.
 
+Before opening an `mxfile`, the host uses the bundled editor's decoder to
+check every compressed or uncompressed page for a readable graph model. A
+corrupt page is rejected before the current drawing and its save target change.
+This check is not a guarantee that every valid-looking diagram will render or
+that the embedded editor has acknowledged the load. Decoding very large pages
+can consume substantial browser memory. Local desktop and emulated-phone tests
+cover an uploaded corrupt page, a corrupt later page, a valid two-page compressed
+file, and preservation, editing, synchronization and reopening of the previous
+drawing. Physical touch and every diagram variant remain unverified.
+
+An initial restore clears its file association when the file is missing or
+invalid. A conflict or transient read failure retains the association for a
+later retry. Local desktop and emulated-phone tests inject both kinds of
+temporary failure; they do not simulate every network or storage failure.
+
 Run `python3 apps/system/diagrams-net/prepare.py` before building. It retrieves
 and checks the pinned upstream commit listed there; generated `node_modules`
 and application bundles are not source files. The upstream license is in
