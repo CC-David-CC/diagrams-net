@@ -35,3 +35,11 @@ If the diagram changes during the discard confirmation, Open is cancelled so
 the newer edit stays available. Local desktop and emulated-phone checks cover
 a delayed embedded-editor autosave, plus the account save/reopen workflow.
 Physical touch and overlapping Open invocations remain unverified.
+
+The editor's Export as workflow sends supported local exports to My files.
+SVG and PNG exports were checked with the actual export dialog, overwrite
+cancellation and a changed-target conflict. Files are saved on the device and
+sync to the account server. The bridge intercepts the pinned editor's local
+save API; other upstream export types, large files and physical-phone touch
+remain unverified. If an export supplies an unsupported data type, the app
+reports that it cannot save it rather than offering a device download.
