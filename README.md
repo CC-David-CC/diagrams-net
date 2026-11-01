@@ -25,6 +25,10 @@ and application bundles are not source files. The upstream license is in
 
 Save as records the chosen destination and edit revision before asking the embedded editor for XML. Changes made while it prepares the diagram remain marked unsaved; the actual saved path is shown. A separate notice reports mirror-detected changes, conflicts or unavailability of the saved file while keeping the current diagram open. Resolve conflicts in Files or save a copy. Detection depends on mirror synchronization. Local desktop, emulated-phone and 4K and live emulated-phone account tests cover delayed export, newer edits, changes/conflicts, fresh-session reopen and listener cleanup.
 
+Closing asks for confirmation while the editor is preparing a save or the
+account write is in progress, even when the diagram was previously clean. A
+write already sent to storage may still finish after the window closes.
+
 The current File-menu integration handles the upstream menu’s pointer events for mouse and touch, while retaining keyboard activation. Local account workflows pass with real mouse clicks, emulated taps, keyboard activation and a 4K-sized viewport; the save snapshot and conflict test passes locally. Initial direct-click tests missed an upstream event interception; pointer-based tests exposed it and the candidate was corrected. Touch movement beyond the tap threshold does not intentionally activate a command, but physical phone gestures remain unverified. The integration is live in static release `86f7fbc0e7c9610d641b96f0e0afa9f5f3ccb9f39599f4a42b065d3065058bb2`; public desktop mouse and emulated-phone tap account workflows passed, including upload, sync, reopen and fallback.
 
 If the diagram changes during the discard confirmation, Open is cancelled so
