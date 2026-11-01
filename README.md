@@ -76,3 +76,14 @@ initial file is missing or invalid, the failed reference is cleared without
 modifying the original file. Local desktop and emulated-phone account tests
 cover switching diagrams, Save As, server sync and refresh; phone-sized checks
 cover invalid and missing file fallback. Physical touch remains unverified.
+
+If the restored diagram cannot be read temporarily, **Retry saved diagram**
+reopens it without leaving the window. Scratch work uses a separate save
+path, including `/Untitled-recovery.drawio` if the original was named
+`/Untitled.drawio`. Retry asks before discarding unsaved scratch edits;
+saving or opening a different file clears the retry target. Local account
+tests covered injected read failure, separate blank scratch save and sync,
+confirmation cancellation and Retry on desktop and an emulated phone. They
+injected the scratch edit notification; actual drawing interaction in this
+particular recovery path, physical touch and other failure modes remain
+unverified.
