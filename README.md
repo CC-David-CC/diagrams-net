@@ -43,3 +43,9 @@ sync to the account server. The bridge intercepts the pinned editor's local
 save API; other upstream export types, large files and physical-phone touch
 remain unverified. If an export supplies an unsupported data type, the app
 reports that it cannot save it rather than offering a device download.
+
+Opening or saving a diagram updates the desktop restore reference. If the
+initial file is missing or invalid, the failed reference is cleared without
+modifying the original file. Local desktop and emulated-phone account tests
+cover switching diagrams, Save As, server sync and refresh; phone-sized checks
+cover invalid and missing file fallback. Physical touch remains unverified.
