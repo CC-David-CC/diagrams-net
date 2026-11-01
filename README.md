@@ -94,3 +94,15 @@ Local registered-account desktop and emulated-phone checks opened a labeled
 diagram, saved it in a folder, exported SVG beside it, verified the label and
 server sync, and exercised PNG, cancellation and overwrite conflict. Physical
 touch and all export formats remain unverified.
+
+Save As accepts one name choice at a time and rejects it if the diagram changed
+while the prompt was open; choose the name again to save the current work. Local
+registered-account desktop and phone-sized tests injected a delayed autosave,
+then saved an actual edited label, synced it and reopened it in a fresh browser.
+
+In the inspected offline **File → Import from** menu, only the computer Device
+option appeared; Google Drive, Dropbox, OneDrive, GitHub and GitLab options did
+not. The computer import remains available alongside account-backed Open. Local
+desktop and emulated-phone menu checks observed no external HTTP requests in
+that flow. This is a limited menu check, not a complete provider or network
+security audit; no new provider features were disabled by this change.
