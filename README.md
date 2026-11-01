@@ -21,8 +21,8 @@ network features disabled in its launch configuration.
 Before opening an `mxfile`, the host uses the bundled editor's decoder to
 check every compressed or uncompressed page for a readable graph model. A
 corrupt page is rejected before the current drawing and its save target change.
-This check is not a guarantee that every valid-looking diagram will render or
-that the embedded editor has acknowledged the load. Decoding very large pages
+This check is not a guarantee that every valid-looking diagram will render.
+Decoding very large pages
 can consume substantial browser memory. Local desktop and emulated-phone tests
 cover an uploaded corrupt page, a corrupt later page, a valid two-page compressed
 file, and preservation, editing, synchronization and reopening of the previous
@@ -32,6 +32,18 @@ An initial restore clears its file association when the file is missing or
 invalid. A conflict or transient read failure retains the association for a
 later retry. Local desktop and emulated-phone tests inject both kinds of
 temporary failure; they do not simulate every network or storage failure.
+
+The host waits for a matching load response and observes the pinned editor's
+actual load and error methods before associating a selected file. The canvas is
+inert and close asks for confirmation while loading. If the editor reports an
+error or does not confirm within 15 seconds, the prior file association remains
+and the window is locked against editing and saving: close it and reopen the
+last saved drawing. An uncertain load may have changed the visible canvas, so
+unsaved work may be lost. Local desktop and emulated-phone tests inject an
+editor exception, delayed and missing responses, a late response after timeout,
+and closing while a load is pending. This adapter depends on the pinned upstream
+protocol and methods and must be requalified on upgrade; it is not proof that
+every possible draw.io rendering defect is detected. Physical touch is unverified.
 
 Run `python3 apps/system/diagrams-net/prepare.py` before building. It retrieves
 and checks the pinned upstream commit listed there; generated `node_modules`
