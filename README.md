@@ -3,12 +3,15 @@
 A local diagrams.net editor embedded per window. Use **File → Open from My files…**
 to open a diagram. To upload a `.drawio` document from the computer, use Files
 first. **File → Save** writes the current diagram to My files; **File → Save as…**
-chooses another path. Files are saved in the browser and then synchronized with
-the account. Existing files require confirmation and the file service checks
+chooses another path. The editor saves diagrams to My files. Existing files require confirmation and the file service checks
 versions; conflicts are reported without silently replacing another copy. The
 two added menu commands integrate with the pinned upstream editor menu; review
 the integration when updating diagrams.net. If the editor menu cannot be
 connected, recovery controls appear above it for opening and saving work.
+
+Anon saves to the temporary workspace in this browser. Signed-in files sync to the account. Double-click a saved file in Files to continue editing it.
+
+![Editor after reopening a saved file from WebOS Files](docs/workspace.png)
 
 Opening checks the XML document before replacing the current diagram and keeps
 unsaved work if reading or validation fails. The editor remains the upstream
